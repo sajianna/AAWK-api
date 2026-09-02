@@ -1,0 +1,131 @@
+info:
+  name: payment/webhook/987654
+  type: http
+  seq: 8
+
+http:
+  method: POST
+  url: |-
+    https://aawklifeline.com/api/payment/webhook/public function paymentWebhook(Request $request, $token)
+    {
+        // 1) Verify webhook token
+        if ($token !== env('EASEBUZZ_WEBHOOK_TOKEN')) {
+            Log::warning('Easebuzz Webhook: Invalid token', [
+                'expected' => env('EASEBUZZ_WEBHOOK_TOKEN'),
+                'received' => $token,
+                'payload'  => $request->all(),
+            ]);
+            return response('OK', 200); // must always return 200
+        }
+
+        try {
+            Log::info('Easebuzz webhook received', $request->all());
+
+            $txnid       = $request->input('txnid');
+            $orderId     = $request->input('udf2');
+            $status      = strtolower($request->input('status', ''));
+            $easepayid   = $request->input('easepayid');
+            $bankRef     = $request->input('bank_ref_num');
+            $mode        = $request->input('mode');
+            $amount      = $request->input('amount');
+            $paymentDate = now()->toDateTimeString();
+
+            $temp = Temp::where('transaction_id', $txnid)->first();
+
+            if ($temp) {
+                $temp->update([
+                    'easebuzz_id'  => $easepayid,
+                    'bank_ref_num' => $bankRef,
+                    'payment_date' => $paymentDate,
+                    'payment_type' => 'Online',
+                    'payment_mode' => $mode,
+                    'status'       => $status,
+                ]);
+
+                if ($status === 'success') {
+                    Payment::updateOrCreate(
+                        ['order_id' => $orderId],
+                        [
+                            'member_id'      => $temp->member_id ?? null,
+                            'transaction_id' => $txnid,
+                            'amount'         => $amount,
+                            'payment_date'   => $paymentDate,
+                            'payment_type'   => 'Online',
+                            'payment_mode'   => $mode,
+                            'status'         => $status,
+                        ]
+                    );
+                }
+            } else {
+                Log::warning('Easebuzz Webhook: Temp record not found', [
+                    'txnid'   => $txnid,
+                    'payload' => $request->all()
+                ]);
+            }
+
+        } catch (\Throwable $e) {
+            Log::error('Easebuzz Webhook Exception: ' . $e->getMessage(), [
+                'exception' => $e,
+                'payload'   => $request->all()
+            ]);
+        }
+
+        return response('OK', 200);
+    }
+  params:
+    - name: |-
+        ? null,
+                                'transaction_id' 
+      value: |-
+        > $txnid,
+                                'amount'         => $amount,
+                                'payment_date'   => $paymentDate,
+                                'payment_type'   => 'Online',
+                                'payment_mode'   => $mode,
+                                'status'         => $status,
+                            ]
+                        );
+                    }
+                } else {
+                    Log::warning('Easebuzz Webhook: Temp record not found', [
+                        'txnid'   => $txnid,
+                        'payload' => $request->all()
+                    ]);
+                }
+
+            } catch (\Throwable $e) {
+                Log::error('Easebuzz Webhook Exception: ' . $e->getMessage(), [
+                    'exception' => $e,
+                    'payload'   => $request->all()
+                ]);
+            }
+
+            return response('OK', 200);
+        }
+      type: query
+  body:
+    type: json
+    data: "{\r
+
+      \  \"txnid\": \"txn123\",\r
+
+      \  \"udf2\": \"order123\",\r
+
+      \  \"status\": \"success\",\r
+
+      \  \"easepayid\": \"EB123\",\r
+
+      \  \"bank_ref_num\": \"BR123\",\r
+
+      \  \"mode\": \"NETBANKING\",\r
+
+      \  \"amount\": \"100\"\r
+
+      }"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

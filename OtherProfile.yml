@@ -1,0 +1,33 @@
+info:
+  name: OtherProfile
+  type: http
+  seq: 7
+
+http:
+  method: POST
+  url: https://aawklifeline.com/api/OtherProfile
+  headers:
+    - name: Accept
+      value: application/json
+    - name: Content-Type
+      value: application/json
+    - name: Authorization
+      value: Bearer 22SSvdgEnj
+  body:
+    type: json
+    data: "{\r
+
+      \r
+
+      \    \"member_id\":\"astra123\",\r
+
+      \    \"amount\": \"10\"\r
+
+      }"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

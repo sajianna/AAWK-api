@@ -1,0 +1,37 @@
+info:
+  name: Register/Initiate
+  type: http
+  seq: 14
+
+http:
+  method: POST
+  url: https://aawklifeline.com/api/Register/Initiate
+  headers:
+    - name: Accept
+      value: application/json
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: "{\r
+
+      \  \"amount\": \"2000\",\r
+
+      \  \"email\": \"annaastra3878@gmail.com\",\r
+
+      \  \"phone\": \"9383413878\",\r
+
+      \  \"name\": \"astra\",\r
+
+      \  \"member_id\": \"aawkww\",\r
+
+      \  \"product_info\": \"Registration Payment\"\r
+
+      }"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

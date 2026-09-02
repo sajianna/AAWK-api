@@ -1,0 +1,23 @@
+info:
+  name: unit
+  type: http
+  seq: 12
+
+http:
+  method: POST
+  url: https://aawklifeline.com/api/unit
+  headers:
+    - name: Accept
+      value: application/json
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: "{\r\n   \"district_id\" :\"3\"\r\n}"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
