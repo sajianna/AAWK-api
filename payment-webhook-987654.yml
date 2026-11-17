@@ -46,63 +46,7 @@ http:
                     Payment::updateOrCreate(
                         ['order_id' => $orderId],
                         [
-                            'member_id'      => $temp->member_id ?? null,
-                            'transaction_id' => $txnid,
-                            'amount'         => $amount,
-                            'payment_date'   => $paymentDate,
-                            'payment_type'   => 'Online',
-                            'payment_mode'   => $mode,
-                            'status'         => $status,
-                        ]
-                    );
-                }
-            } else {
-                Log::warning('Easebuzz Webhook: Temp record not found', [
-                    'txnid'   => $txnid,
-                    'payload' => $request->all()
-                ]);
-            }
-
-        } catch (\Throwable $e) {
-            Log::error('Easebuzz Webhook Exception: ' . $e->getMessage(), [
-                'exception' => $e,
-                'payload'   => $request->all()
-            ]);
-        }
-
-        return response('OK', 200);
-    }
-  params:
-    - name: |-
-        ? null,
-                                'transaction_id' 
-      value: |-
-        > $txnid,
-                                'amount'         => $amount,
-                                'payment_date'   => $paymentDate,
-                                'payment_type'   => 'Online',
-                                'payment_mode'   => $mode,
-                                'status'         => $status,
-                            ]
-                        );
-                    }
-                } else {
-                    Log::warning('Easebuzz Webhook: Temp record not found', [
-                        'txnid'   => $txnid,
-                        'payload' => $request->all()
-                    ]);
-                }
-
-            } catch (\Throwable $e) {
-                Log::error('Easebuzz Webhook Exception: ' . $e->getMessage(), [
-                    'exception' => $e,
-                    'payload'   => $request->all()
-                ]);
-            }
-
-            return response('OK', 200);
-        }
-      type: query
+                            'member_id'      => $temp->member_id 
   body:
     type: json
     data: "{\r
@@ -129,3 +73,4 @@ settings:
   timeout: 0
   followRedirects: true
   maxRedirects: 5
+  forwardAuthorizationHeader: true

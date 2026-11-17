@@ -12,24 +12,18 @@ http:
     - name: Content-Type
       value: application/json
     - name: Authorization
-      value: Bearer GiXiB7HRs9
+      value: Bearer yIHUritUKt
   body:
     type: json
-    data: "{\r
-
-      \  \"amount\": \"1\",\r
-
-      \  \"email\": \"annaastra3878@gmail.com\",\r
-
-      \  \"phone\": \"9383413878\",\r
-
-      \  \"name\": \"astra\",\r
-
-      \  \"member_id\": \"31\",\r
-
-      \  \"product_info\": \"Membership Payment\"\r
-
-      }\r\n"
+    data: |
+      {
+        "amount": "100",
+        "email": "annaastra3878@gmail.com",
+        "phone": "9383413878",
+        "name": "astra",
+        "member_id": "31",
+        "product_info": "Membership Payment"
+      }
   auth: inherit
 
 settings:
@@ -37,3 +31,4 @@ settings:
   timeout: 0
   followRedirects: true
   maxRedirects: 5
+  forwardAuthorizationHeader: true
