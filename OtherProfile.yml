@@ -12,18 +12,16 @@ http:
     - name: Content-Type
       value: application/json
     - name: Authorization
-      value: Bearer 22SSvdgEnj
+      value: Bearer RMhL49TdiC
   body:
     type: json
-    data: "{\r
+    data: |-
+      {
 
-      \r
-
-      \    \"member_id\":\"astra123\",\r
-
-      \    \"amount\": \"10\"\r
-
-      }"
+          "member_id":"37114/13/M",
+          "amount"   : "100",
+          "payer_id" :"41834/09/M"
+      }
   auth: inherit
 
 settings:
@@ -31,3 +29,4 @@ settings:
   timeout: 0
   followRedirects: true
   maxRedirects: 5
+  forwardAuthorizationHeader: true

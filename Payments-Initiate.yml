@@ -12,16 +12,18 @@ http:
     - name: Content-Type
       value: application/json
     - name: Authorization
-      value: Bearer yIHUritUKt
+      value: Bearer ylgTlgxf0w
   body:
     type: json
     data: |
       {
-        "amount": "100",
+        "amount": "200",
         "email": "annaastra3878@gmail.com",
         "phone": "9383413878",
         "name": "astra",
-        "member_id": "31",
+        "member_id": "AAWKKIAM0081",
+        "membership_id" :"AAWKKIAM0081",
+        "payer_id": "41834/09/M",
         "product_info": "Membership Payment"
       }
   auth: inherit

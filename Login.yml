@@ -8,23 +8,16 @@ http:
   url: https://aawklifeline.com/api/Login
   body:
     type: json
-    data: "{\r
-
-      \    \"member_id\": \"astra123\",\r
-
-      \    \"phone_number\":\"9383413878\",\r
-
-      \    \"fcm_token\":\"\",\r
-
-      \    \"app_version\":\"\",\r
-
-      \    \"model\":\"\",\r
-
-      \    \"model_name\":\"\",\r
-
-      \    \"model_version\":\"\"\r
-
-      } \r\n"
+    data: |
+      {
+          "member_id": "41834/09/M",
+          "phone_number":"8606455479",
+          "fcm_token":"",
+          "app_version":"",
+          "model":"",
+          "model_name":"",
+          "model_version":""
+      } 
   auth:
     type: bearer
     token: ""
@@ -34,3 +27,4 @@ settings:
   timeout: 0
   followRedirects: true
   maxRedirects: 5
+  forwardAuthorizationHeader: true
